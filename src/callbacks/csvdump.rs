@@ -111,9 +111,7 @@ impl Callback for CsvDump {
             // Rename temp files
             fs::rename(
                 self.dump_folder.as_path().join(format!("{}.csv.tmp", f)),
-                self.dump_folder
-                    .as_path()
-                    .join(format!("{}-{}-{}.csv", f, self.start_height, block_height)),
+                self.dump_folder.as_path().join(format!("{}.csv", f)),
             )?;
         }
 
