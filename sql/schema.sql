@@ -3,8 +3,8 @@
 #SET GLOBAL innodb_file_format=Barracuda;
 
 
-CREATE SCHEMA IF NOT EXISTS `btc_blockchain` CHARACTER SET ascii COLLATE ascii_bin;
-USE `btc_blockchain`;
+CREATE SCHEMA IF NOT EXISTS `btc` CHARACTER SET ascii COLLATE ascii_bin;
+USE `btc`;
 
 
 DROP TABLE IF EXISTS `blocks`;
@@ -82,7 +82,7 @@ CREATE TABLE `tx_in` (
 
 TRUNCATE blocks;
 ## Load blocks into table
-LOAD DATA LOCAL INFILE 'blocks-0-75604.csv'
+LOAD DATA LOCAL INFILE 'blocks.csv'
 INTO TABLE blocks
 FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n'
@@ -95,7 +95,7 @@ COMMIT;
 
 TRUNCATE transactions;
 ## Load transactions into table
-LOAD DATA LOCAL INFILE 'transactions-0-75604.csv'
+LOAD DATA LOCAL INFILE 'transactions.csv'
 INTO TABLE transactions
 FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n'
@@ -107,7 +107,7 @@ COMMIT;
 
 TRUNCATE tx_out;
 ## Load tx_out into table
-LOAD DATA LOCAL INFILE 'tx_out-0-75604.csv'
+LOAD DATA LOCAL INFILE 'tx_out.csv'
 INTO TABLE tx_out
 FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n'
@@ -119,7 +119,7 @@ COMMIT;
 
 TRUNCATE tx_in;
 ## Load tx_in into table
-LOAD DATA LOCAL INFILE 'tx_in-0-75604.csv'
+LOAD DATA LOCAL INFILE 'tx_in.csv'
 INTO TABLE tx_in
 FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n'
