@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE VIEW view_blocks AS
 SELECT
 	height,
