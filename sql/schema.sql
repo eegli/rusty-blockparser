@@ -48,7 +48,7 @@ CREATE TABLE `tx_out` (
   `indexOut`        int(10) unsigned            		NOT NULL,
   `value`           bigint(8) unsigned            		NOT NULL,
   `scriptPubKey`    blob                                NOT NULL,
-  `address`     	varchar(46) 					DEFAULT NULL,
+  `address`     	  varchar(46) 					DEFAULT NULL,
   `unspent`        	bit DEFAULT TRUE                    NOT NULL,
 
   PRIMARY KEY (`id`)
