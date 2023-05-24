@@ -12,13 +12,13 @@ USE `btc`;
 
 DROP TABLE IF EXISTS `blocks`;
 CREATE TABLE `blocks` (
-  `id`              int(4) unsigned AUTO_INCREMENT      NOT NULL,
-  `hash` 			binary(32)                          NOT NULL,
-  `height`			int(10) unsigned					NOT NULL,
-  `version` 		int(11)                     		NOT NULL,
-  `blocksize`		int(10) unsigned					NOT NULL,
+  `id`          int(4) unsigned AUTO_INCREMENT      NOT NULL,
+  `hash` 			  binary(32)                          NOT NULL,
+  `height`			int(10) unsigned					          NOT NULL,
+  `version` 		int(11)                     		    NOT NULL,
+  `blocksize`		int(10) unsigned					          NOT NULL,
   `hashPrev` 		binary(32)                          NOT NULL,
-  `hashMerkleRoot` 	binary(32)                          NOT NULL,
+  `hashMerkleRoot` 	binary(32)                      NOT NULL,
   `nTime` 			int(10) unsigned                    NOT NULL,
   `nBits` 			int(10) unsigned                    NOT NULL,
   `nNonce` 			int(10) unsigned                    NOT NULL,
@@ -45,10 +45,10 @@ DROP TABLE IF EXISTS `tx_out`;
 CREATE TABLE `tx_out` (
   `id`              int(4) unsigned AUTO_INCREMENT      NOT NULL,
   `txid`            binary(32)                  		NOT NULL,
-  `indexOut`        int(10) unsigned            		NOT NULL,
+  `indexOut`        int(10) unsigned            		DEFAULT NULL,
   `value`           bigint(8) unsigned            		NOT NULL,
   `scriptPubKey`    blob                                NOT NULL,
-  `address`     	  varchar(46) 					DEFAULT NULL,
+  `address`     	  varchar(62) 					            DEFAULT NULL,
   `unspent`        	bit DEFAULT TRUE                    NOT NULL,
 
   PRIMARY KEY (`id`)
@@ -149,9 +149,9 @@ ALTER TABLE `transactions` ADD KEY (`txid`);
 ALTER TABLE `tx_in` ADD KEY (`hashPrevOut`, `indexPrevOut`);
 ALTER TABLE `tx_out` ADD KEY (`txid`, `indexOut`),
 					 ADD KEY (`address`);
-#ALTER TABLE `transactions` ADD FOREIGN KEY (`hashBlock`) REFERENCES blocks(`hash`);
-#ALTER TABLE `tx_out` ADD FOREIGN KEY (`txid`) REFERENCES transactions(`txid`);
-#ALTER TABLE `tx_id` ADD FOREIGN KEY (`txid`) REFERENCES transactions(`txid`);
+ALTER TABLE `transactions` ADD FOREIGN KEY (`hashBlock`) REFERENCES blocks(`hash`);
+ALTER TABLE `tx_out` ADD FOREIGN KEY (`txid`) REFERENCES transactions(`txid`);
+ALTER TABLE `tx_id` ADD FOREIGN KEY (`txid`) REFERENCES transactions(`txid`);
 COMMIT;
 
 # Flag spent tx outputs

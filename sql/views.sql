@@ -1,43 +1,41 @@
-CREATE OR REPLACE VIEW view_blocks AS
-SELECT
-	height,
-	LOWER(HEX(hash)) AS hash,
-	version,
-	LOWER(HEX(hashPrev)) AS hashPrev,
-	LOWER(HEX(hashMerkleRoot)) AS hashMerkleRoot,
-	nTime,
-	nBits,
-	nNonce
-FROM blocks
-	ORDER BY height ASC;
-
-SELECT * FROM view_blocks;
+CREATE OR replace VIEW view_blocks
+AS
+  SELECT height,
+         Lower(Hex(hash))           AS hash,
+         version,
+         Lower(Hex(hashprev))       AS hashPrev,
+         Lower(Hex(hashmerkleroot)) AS hashMerkleRoot,
+         ntime,
+         nbits,
+         nnonce
+  FROM   blocks
+  ORDER  BY height ASC;
 
 
-CREATE OR REPLACE VIEW view_transactions AS
-SELECT
-	LOWER(HEX(txid)) as txid,
-    LOWER(HEX(hashBlock)) as hashBlock,
-    version,
-    lockTime
-FROM transactions;
-
-SELECT * FROM view_transactions;
-
-
-CREATE OR REPLACE VIEW view_balances AS
-    SELECT
-        address,
-        CAST(SUM(value) / 100000000 AS DECIMAL (16 , 8 )) AS balance
-    FROM
-        tx_out
-    WHERE
-        unspent = TRUE
-    GROUP BY address
-    ORDER BY balance DESC;
+CREATE OR replace VIEW view_balances
+AS
+  SELECT address,
+         Cast(SUM(value) / 100000000 AS DECIMAL (16, 8)) AS balance
+  FROM   tx_out
+  WHERE  unspent = TRUE
+  GROUP  BY address
+  ORDER  BY balance DESC;  
 
 
-SELECT * FROM view_balances;
+CREATE OR replace VIEW view_transactions
+AS
+  SELECT Lower(Hex(t.hashblock)) hashblock,
+          Lower(Hex(t.txid)) txid,
+          Lower(Hex(i.hashprevout)) hashprevout,
+          i.indexprevout,
+          o.indexout,
+          Cast(o.value / 100000000 AS DECIMAL (16, 8)) value,
+          o.address
+   FROM   transactions t
+          join tx_in i
+            ON t.txid = i.txid
+          join tx_out o
+            ON t.txid = o.txid;
 
 
 CREATE FUNCTION target (bits float)
