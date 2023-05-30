@@ -37,6 +37,23 @@ AS
           join tx_out o
             ON t.txid = o.txid;
 
+CREATE OR REPLACE VIEW view_transactions_ext 
+AS 
+  SELECT b.height,
+        i.hashprevout,
+        i.indexprevout,
+        t.txid,
+        o.indexout,
+        o.address,
+        o.value
+  FROM transactions t
+          JOIN blocks b
+                ON b.hash = t.hashblock
+          JOIN tx_in i
+                ON t.txid = i.txid
+          JOIN tx_out o
+                ON i.txid = o.txid;
+
 
 CREATE FUNCTION target (bits float)
 	RETURNS REAL DETERMINISTIC
