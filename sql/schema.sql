@@ -80,15 +80,15 @@ SET sql_log_bin=0;
 
 
 ## Also consider to set following mysql settings for maximum performance
-# innodb_read_io_threads 	= 3
+innodb_read_io_threads 	= 3
 # innodb_write_io_threads 	= 3
-# innodb_buffer_pool_size 	= 6G
-# innodb_autoinc_lock_mode 	= 2
-# innodb_log_file_size 		= 128M
-# innodb_log_buffer_size 	= 8M
-# innodb_flush_method 		= O_DIRECT
-# innodb_flush_log_at_trx_commit = 0
-# skip-innodb_doublewrite
+innodb_buffer_pool_size 	= 6G
+innodb_autoinc_lock_mode 	= 2
+innodb_log_file_size 		= 128M
+innodb_log_buffer_size 	= 8M
+innodb_flush_method 		= O_DIRECT
+innodb_flush_log_at_trx_commit = 0
+skip-innodb_doublewrite
 
 
 TRUNCATE blocks;
